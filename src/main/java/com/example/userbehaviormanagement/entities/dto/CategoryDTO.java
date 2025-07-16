@@ -1,0 +1,9 @@
+package com.example.userbehaviormanagement.entities.dto;
+
+import lombok.Data;
+
+@Data
+public class CategoryDTO {
+    private String id;
+    private String name;
+}
