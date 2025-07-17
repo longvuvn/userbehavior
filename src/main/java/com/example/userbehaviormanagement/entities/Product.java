@@ -35,7 +35,7 @@ public class Product extends Auditing{
     @Column(nullable = false)
     private Integer totalReviews;
 
-    private String imageUrl;
+    private String image;
 
     private int quantity;
 
