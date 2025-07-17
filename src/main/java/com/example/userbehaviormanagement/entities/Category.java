@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "\"admin\"")
+@Table(name = "\"categories\"")
 @Data
 public class Category {
 

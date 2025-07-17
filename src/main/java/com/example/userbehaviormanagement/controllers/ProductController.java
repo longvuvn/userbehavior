@@ -1,5 +1,6 @@
 package com.example.userbehaviormanagement.controllers;
 
+import com.example.userbehaviormanagement.entities.Pagination;
 import com.example.userbehaviormanagement.entities.dto.ProductDTO;
 import com.example.userbehaviormanagement.services.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,11 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductDTO>> getAll() {
-        List<ProductDTO> products = productService.getAllProducts();
+    public ResponseEntity<Pagination<ProductDTO>> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
+        Pagination<ProductDTO> products = productService.getAllProducts(page, size);
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
 

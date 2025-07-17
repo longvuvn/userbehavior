@@ -9,6 +9,8 @@ public class ProductDTO {
     private String name;
     private String categoryName;
     private String price;
+    private String description;
+    private String image;
     private int totalReviews;
     private double averageRating;
     private String quantity;

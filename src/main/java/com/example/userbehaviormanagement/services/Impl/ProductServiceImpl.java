@@ -1,6 +1,7 @@
 package com.example.userbehaviormanagement.services.Impl;
 
 import com.example.userbehaviormanagement.entities.Category;
+import com.example.userbehaviormanagement.entities.Pagination;
 import com.example.userbehaviormanagement.entities.Product;
 import com.example.userbehaviormanagement.entities.dto.ProductDTO;
 import com.example.userbehaviormanagement.enums.ProductStatus;
@@ -10,6 +11,9 @@ import com.example.userbehaviormanagement.repositories.ReviewRepository;
 import com.example.userbehaviormanagement.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,11 +31,22 @@ public class ProductServiceImpl implements ProductService {
     private final ReviewRepository reviewRepository;
 
     @Override
-    public List<ProductDTO> getAllProducts() {
-        List<Product> products = productRepository.findAll();
-        return products.stream()
+    public Pagination<ProductDTO> getAllProducts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Product> productPage = productRepository.findAll(pageable);
+
+        List<ProductDTO> products = productPage.getContent()
+                .stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .collect(Collectors.toList());
+
+        Pagination<ProductDTO> pagination = new Pagination<>();
+        pagination.setSize(productPage.getNumber());
+        pagination.setSize(productPage.getSize());
+        pagination.setTotalPages(productPage.getTotalPages());
+        pagination.setTotalElements(productPage.getTotalElements());
+        pagination.setContent(products);
+        return pagination;
     }
 
     @Override
@@ -46,6 +61,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO createProduct(ProductDTO productDTO) {
         Product product = modelMapper.map(productDTO, Product.class);
         Category category = categoryRepository.findByName(productDTO.getCategoryName());
+        product.setCategory(category);
         product.setStatus(ProductStatus.InStock);
         product.setTotalReviews(0);
         product.setAverageRating(0.0);
