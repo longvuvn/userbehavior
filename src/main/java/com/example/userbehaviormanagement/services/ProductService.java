@@ -10,4 +10,5 @@ public interface ProductService {
     ProductDTO createProduct(ProductDTO productDTO);
     ProductDTO updateProduct(String id, ProductDTO productDTO);
     void deleteProduct(String id);
+    ProductDTO updateTotalRating(String productId);
 }
