@@ -4,6 +4,7 @@ package com.example.userbehaviormanagement.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
@@ -24,5 +25,9 @@ public class OrderDetail {
 
     private Integer quantity;
 
-    private Double unitPrice;
+    @Column(name = "unit_price")
+    private BigDecimal unitPrice;
+
+    @Column(name = "total_price")
+    private Double totalPrice;
 }

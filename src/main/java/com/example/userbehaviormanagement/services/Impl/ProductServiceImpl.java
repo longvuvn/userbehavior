@@ -6,6 +6,7 @@ import com.example.userbehaviormanagement.entities.dto.ProductDTO;
 import com.example.userbehaviormanagement.enums.ProductStatus;
 import com.example.userbehaviormanagement.repositories.CategoryRepository;
 import com.example.userbehaviormanagement.repositories.ProductRepository;
+import com.example.userbehaviormanagement.repositories.ReviewRepository;
 import com.example.userbehaviormanagement.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -19,9 +20,11 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
+
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
     private final CategoryRepository categoryRepository;
+    private final ReviewRepository reviewRepository;
 
     @Override
     public List<ProductDTO> getAllProducts() {
@@ -69,4 +72,18 @@ public class ProductServiceImpl implements ProductService {
                         .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
         productRepository.delete(existingProduct);
     }
+
+    @Override
+    public ProductDTO updateTotalRating(String productId) {
+        UUID productUUID = UUID.fromString(productId);
+        Product existingProduct = productRepository.findById(productUUID)
+                .orElseThrow(() -> new RuntimeException("Product not found with id: " + productUUID));
+       int totalReviews =reviewRepository.countByProductId(productUUID);
+       int totalRating = reviewRepository.sumRatingByProductId(productUUID);
+       existingProduct.setTotalReviews(totalReviews);
+       existingProduct.setAverageRating(totalReviews == 0 ? 0.0 : (double) totalRating / totalReviews);
+       Product updatedProduct = productRepository.save(existingProduct);
+       return modelMapper.map(updatedProduct, ProductDTO.class);
+    }
+
 }

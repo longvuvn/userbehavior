@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "\"order\"")
+@Table(name = "\"orders\"")
 @Data
 public class Order extends Auditing{
     @Id
@@ -22,14 +22,11 @@ public class Order extends Auditing{
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @Column(name = "total_amount")
-    private BigDecimal totalAmount;
+    @Column(name = "total_price")
+    private BigDecimal totalPrice;
 
     @Column(name = "status")
     private OrderStatus status;
-
-    @Column(name = "created_at")
-    private Instant createdAt = Instant.now();
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
     private Set<OrderDetail> orderDetails;
