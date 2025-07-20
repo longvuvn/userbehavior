@@ -3,6 +3,7 @@ package com.example.userbehaviormanagement.controllers;
 
 import com.example.userbehaviormanagement.entities.dto.CustomerDTO;
 import com.example.userbehaviormanagement.services.CustomerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerDTO> create (@RequestBody CustomerDTO customer){
+    public ResponseEntity<CustomerDTO> create (@Valid @RequestBody CustomerDTO customer){
         CustomerDTO createdCustomer = customerService.createCustomer(customer);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
     }
@@ -47,3 +48,4 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
+    

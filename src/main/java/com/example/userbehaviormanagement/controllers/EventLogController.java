@@ -22,7 +22,7 @@ public class EventLogController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EventLogDTO> getById(String id) {
+    public ResponseEntity<EventLogDTO> getById(@PathVariable String id) {
         EventLogDTO eventLog = eventLogService.getEventLogById(id);
         return ResponseEntity.status(200).body(eventLog);
     }
@@ -34,13 +34,13 @@ public class EventLogController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EventLogDTO> update(String id, EventLogDTO eventLogDTO) {
+    public ResponseEntity<EventLogDTO> update(@PathVariable String id, EventLogDTO eventLogDTO) {
         EventLogDTO updatedEventLog = eventLogService.updateEventLog(id, eventLogDTO);
         return ResponseEntity.status(200).body(updatedEventLog);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(String id) {
+    public ResponseEntity<Void> delete(@PathVariable String id) {
         eventLogService.deleteEventLog(id);
         return ResponseEntity.status(204).build();
     }

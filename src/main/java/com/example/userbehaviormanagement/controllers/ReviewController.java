@@ -2,6 +2,7 @@ package com.example.userbehaviormanagement.controllers;
 
 import com.example.userbehaviormanagement.entities.dto.ReviewDTO;
 import com.example.userbehaviormanagement.services.ReviewService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<ReviewDTO> create (@RequestBody ReviewDTO review){
+    public ResponseEntity<ReviewDTO> create (@Valid @RequestBody ReviewDTO review){
         ReviewDTO createdReview = reviewService.createReview(review);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdReview);
     }

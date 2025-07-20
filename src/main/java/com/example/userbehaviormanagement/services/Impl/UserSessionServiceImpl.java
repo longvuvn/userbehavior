@@ -10,8 +10,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import com.example.userbehaviormanagement.entities.User;
 import com.example.userbehaviormanagement.entities.UserSession;
 import com.example.userbehaviormanagement.entities.dto.UserSessionDTO;
+import com.example.userbehaviormanagement.repositories.UserRepository;
 import com.example.userbehaviormanagement.repositories.UserSessionRepository;
 import com.example.userbehaviormanagement.services.UserSessionService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class UserSessionServiceImpl implements UserSessionService {
     private final UserSessionRepository userSessionRepository;
     private final ModelMapper modelMapper;
     private final SimpMessagingTemplate messagingTemplate;
+    private final UserRepository userRepository;
 
     @Override
     public List<UserSessionDTO> getAllUserSessions() {
@@ -45,7 +48,12 @@ public class UserSessionServiceImpl implements UserSessionService {
     public UserSessionDTO createUserSession(UserSessionDTO userSessionDTO) {
         UserSession userSession = modelMapper.map(userSessionDTO, UserSession.class);
 
-        // Tự động set thời gian tạo nếu chưa có (thực tế @CreatedDate sẽ tự set)
+        // Lấy userId từ DTO, tìm User trong DB và set vào entity
+        if (userSessionDTO.getUserId() != null) {
+            User user = userRepository.findById(UUID.fromString(userSessionDTO.getUserId())).orElse(null);
+            userSession.setUser(user);
+        }
+
         if (userSession.getCreatedAt() == null) {
             userSession.setCreatedAt(Instant.now());
         }

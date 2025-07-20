@@ -22,7 +22,7 @@ public class EventTypeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EventTypeDTO> getById(String id) {
+    public ResponseEntity<EventTypeDTO> getById(@PathVariable String id) {
         EventTypeDTO eventType = eventTypeService.getEventTypeById(id);
         return ResponseEntity.status(200).body(eventType);
     }
@@ -34,13 +34,13 @@ public class EventTypeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EventTypeDTO> update(String id, EventTypeDTO eventTypeDTO) {
+    public ResponseEntity<EventTypeDTO> update(@PathVariable String id, EventTypeDTO eventTypeDTO) {
         EventTypeDTO updatedEventType = eventTypeService.updateEventType(id, eventTypeDTO);
         return ResponseEntity.status(200).body(updatedEventType);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(String id) {
+    public ResponseEntity<Void> delete(@PathVariable String id) {
         eventTypeService.deleteEventType(id);
         return ResponseEntity.status(204).build();
     }

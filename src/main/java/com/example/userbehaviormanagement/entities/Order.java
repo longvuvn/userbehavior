@@ -1,19 +1,17 @@
 package com.example.userbehaviormanagement.entities;
 
-
 import com.example.userbehaviormanagement.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Table(name = "\"orders\"")
 @Data
-public class Order extends Auditing{
+public class Order extends Auditing {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

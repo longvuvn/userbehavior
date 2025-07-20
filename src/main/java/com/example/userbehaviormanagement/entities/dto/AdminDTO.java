@@ -11,6 +11,7 @@ public class AdminDTO {
     private String department;
     private String roleName;
     private String status;
+    private String avatar;
     private String createdAt;
     private String updatedAt;
 }

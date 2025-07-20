@@ -49,7 +49,7 @@ public class EventLogServiceImpl implements EventLogService {
     @Override
     public EventLogDTO createEventLog(EventLogDTO eventLogDTO) {
         EventLog eventLog = modelMapper.map(eventLogDTO, EventLog.class);
-        EventType eventType = eventTypeRepository.findById(UUID.fromString(eventLogDTO.getEventTypeId()))
+        EventType eventType = eventTypeRepository.findById(UUID.fromString(eventLogDTO.getTypeId()))
                 .orElseThrow(() -> new RuntimeException("EventType not found"));
         eventLog.setEventType(eventType);
         UserSession session = userSessionRepository.findById(UUID.fromString(eventLogDTO.getUserSessionId()))

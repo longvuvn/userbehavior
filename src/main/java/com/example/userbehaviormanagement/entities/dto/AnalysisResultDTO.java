@@ -9,9 +9,12 @@ public class AnalysisResultDTO {
     private String id;
     private String eventTypeId;
     private String eventTypeName;
-    private Integer totalCount;
+    private Integer totalEvents;
+    private Integer uniqueSessions;
+    private Integer uniqueUsers;
+    private Double interactionRate;
+    private String mostCommonElement;
     private Integer avgX;
     private Integer avgY;
-    private String mostCommonElement;
     private Instant lastUpdated;
 }
