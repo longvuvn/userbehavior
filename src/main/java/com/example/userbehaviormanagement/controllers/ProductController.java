@@ -3,12 +3,11 @@ package com.example.userbehaviormanagement.controllers;
 import com.example.userbehaviormanagement.entities.Pagination;
 import com.example.userbehaviormanagement.entities.dto.ProductDTO;
 import com.example.userbehaviormanagement.services.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -19,8 +18,7 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<Pagination<ProductDTO>> getAll(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size
-    ) {
+            @RequestParam(defaultValue = "5") int size) {
         Pagination<ProductDTO> products = productService.getAllProducts(page, size);
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
@@ -32,7 +30,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> create(@RequestBody ProductDTO product) {
+    public ResponseEntity<ProductDTO> create(@Valid @RequestBody ProductDTO product) {
         ProductDTO productCreated = productService.createProduct(product);
         return ResponseEntity.status(HttpStatus.CREATED).body(productCreated);
     }

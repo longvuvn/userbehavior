@@ -23,7 +23,7 @@ public class AnalysisResultController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AnalysisResultDTO> getById(String id) {
+    public ResponseEntity<AnalysisResultDTO> getById(@PathVariable String id) {
         AnalysisResultDTO result = analysisResultService.getAnalysisResultById(id);
         return ResponseEntity.status(200).body(result);
     }
@@ -35,13 +35,13 @@ public class AnalysisResultController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AnalysisResultDTO> update(String id, AnalysisResultDTO analysisResultDTO) {
+    public ResponseEntity<AnalysisResultDTO> update(@PathVariable String id, AnalysisResultDTO analysisResultDTO) {
         AnalysisResultDTO updatedResult = analysisResultService.updateAnalysisResult(id, analysisResultDTO);
         return ResponseEntity.status(200).body(updatedResult);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(String id) {
+    public ResponseEntity<Void> delete(@PathVariable String id) {
         analysisResultService.deleteAnalysisResult(id);
         return ResponseEntity.status(204).build();
     }

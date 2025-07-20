@@ -6,7 +6,7 @@ import lombok.Data;
 public class EventLogDTO {
     private String id;
     private String userSessionId;
-    private String eventTypeId;
+    private String typeId;
     private String url;
     private Integer x;
     private Integer y;

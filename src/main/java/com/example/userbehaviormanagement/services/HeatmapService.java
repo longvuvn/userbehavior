@@ -6,4 +6,5 @@ import com.example.userbehaviormanagement.entities.dto.HeatmapDTO;
 
 public interface HeatmapService {
     List<HeatmapDTO> getHeatmap(String url, String type);
+    HeatmapDTO createHeatmap(HeatmapDTO heatmapDTO);
 }

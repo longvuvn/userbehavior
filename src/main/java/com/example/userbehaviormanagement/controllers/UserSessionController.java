@@ -2,6 +2,7 @@ package com.example.userbehaviormanagement.controllers;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,25 +25,25 @@ public class UserSessionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserSessionDTO> getById(String id) {
+    public ResponseEntity<UserSessionDTO> getById(@PathVariable String id) {
         UserSessionDTO userSession = userSessionService.getUserSessionById(id);
         return ResponseEntity.status(200).body(userSession);
     }
 
     @PostMapping
-    public ResponseEntity<UserSessionDTO> create(@RequestBody UserSessionDTO userSessionDTO) {
+    public ResponseEntity<UserSessionDTO> create(@Valid @RequestBody UserSessionDTO userSessionDTO) {
         UserSessionDTO createdUserSession = userSessionService.createUserSession(userSessionDTO);
         return ResponseEntity.status(201).body(createdUserSession);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserSessionDTO> update(String id, UserSessionDTO userSessionDTO) {
+    public ResponseEntity<UserSessionDTO> update(@PathVariable String id, UserSessionDTO userSessionDTO) {
         UserSessionDTO updatedUserSession = userSessionService.updateUserSession(id, userSessionDTO);
         return ResponseEntity.status(200).body(updatedUserSession);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(String id) {
+    public ResponseEntity<Void> delete(@PathVariable String id) {
         userSessionService.deleteUserSession(id);
         return ResponseEntity.status(204).build();
     }

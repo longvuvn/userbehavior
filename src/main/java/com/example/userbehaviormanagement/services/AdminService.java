@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface AdminService {
     List<AdminDTO> getAllAdmins();
+    AdminDTO createAdmin(AdminDTO adminDTO);
 }

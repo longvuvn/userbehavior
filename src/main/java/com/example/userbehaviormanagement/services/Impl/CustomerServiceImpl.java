@@ -3,13 +3,13 @@ package com.example.userbehaviormanagement.services.Impl;
 import com.example.userbehaviormanagement.entities.Customer;
 import com.example.userbehaviormanagement.entities.Role;
 import com.example.userbehaviormanagement.entities.dto.CustomerDTO;
-import com.example.userbehaviormanagement.entities.dto.RoleDTO;
 import com.example.userbehaviormanagement.enums.UserStatus;
 import com.example.userbehaviormanagement.repositories.CustomerRepository;
 import com.example.userbehaviormanagement.services.CustomerService;
 import com.example.userbehaviormanagement.services.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -24,8 +24,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
     private final ModelMapper modelMapper;
-    private static final String DEFAULT_AVATAR_PATH = "/data/images/c21f969b5f03d33d43e04f8f136e7682.png";
+    private static final String DEFAULT_AVATAR_PATH = "/data/image/c21f969b5f03d33d43e04f8f136e7682.png";
     private final RoleService roleService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<CustomerDTO> getAllCustomers() {
@@ -47,15 +48,17 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO createCustomer(CustomerDTO customerDTO) {
         Role role = roleService.getRoleByName("Customer");
         Customer customer = modelMapper.map(customerDTO, Customer.class);
-        if (!StringUtils.hasText(customerDTO.getAvatar())) {
-            customerDTO.setAvatar(DEFAULT_AVATAR_PATH);
-        }
+        String avatar = StringUtils.hasText(customerDTO.getAvatar()) ? customerDTO.getAvatar() : DEFAULT_AVATAR_PATH;
+        customer.setAvatar(avatar);
 
         customer.setRole(role);
         customer.setStatus(UserStatus.ACTIVE);
-        customer.setAvatar(customerDTO.getAvatar());
+        customer.setPassword(passwordEncoder.encode(customerDTO.getPassword()));
+
         Customer savedCustomer = customerRepository.save(customer);
-        return modelMapper.map(savedCustomer, CustomerDTO.class);
+        CustomerDTO result = modelMapper.map(savedCustomer, CustomerDTO.class);
+        result.setAvatar(savedCustomer.getAvatar());
+        return result;
     }
 
     @Override

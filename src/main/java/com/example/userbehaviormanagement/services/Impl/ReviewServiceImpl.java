@@ -8,7 +8,6 @@ import com.example.userbehaviormanagement.enums.ReviewStatus;
 import com.example.userbehaviormanagement.repositories.CustomerRepository;
 import com.example.userbehaviormanagement.repositories.ProductRepository;
 import com.example.userbehaviormanagement.repositories.ReviewRepository;
-import com.example.userbehaviormanagement.services.CustomerService;
 import com.example.userbehaviormanagement.services.ProductService;
 import com.example.userbehaviormanagement.services.ReviewService;
 import lombok.RequiredArgsConstructor;

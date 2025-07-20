@@ -6,6 +6,7 @@ import lombok.Data;
 public class UserSessionDTO {
     private String id;
     private String ipAddress;
+    private String userId;
     private String browserInfo;
     private String osInfo;
     private String createdAt;
