@@ -13,7 +13,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "\"review\"")
 @Data
-public class Review {
+public class Review extends Auditing{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

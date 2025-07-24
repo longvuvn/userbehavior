@@ -23,6 +23,12 @@ public class ReviewController {
         return ResponseEntity.status(HttpStatus.OK).body(reviews);
     }
 
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<List<ReviewDTO>> getAllByProductId(@PathVariable String productId){
+        List<ReviewDTO> reviews = reviewService.getAllReviewsByProductId(productId);
+        return ResponseEntity.status(HttpStatus.OK).body(reviews);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ReviewDTO> getById(@PathVariable String id){
         ReviewDTO review = reviewService.getReviewById(id);

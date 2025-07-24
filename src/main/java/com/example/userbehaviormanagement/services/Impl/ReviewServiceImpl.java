@@ -85,4 +85,12 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.delete(existingReview);
         productService.updateTotalRating(String.valueOf(existingReview.getProduct().getId()));
     }
+
+    @Override
+    public List<ReviewDTO> getAllReviewsByProductId(String productId) {
+        List<Review> reviews = reviewRepository.findAllByProductId(UUID.fromString(productId));
+        return reviews.stream()
+                .map(review -> modelMapper.map(review, ReviewDTO.class))
+                .collect(Collectors.toList());
+    }
 }
