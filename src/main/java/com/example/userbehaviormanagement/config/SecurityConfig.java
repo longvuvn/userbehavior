@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,12 +32,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v1/events/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/heatmap/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/customers").permitAll()
+                        .requestMatchers("/api/v1/customers").permitAll()
+                        .requestMatchers("/api/v1/reviews/product/{productId}").permitAll()
                         .requestMatchers("/data/image/**").permitAll()
                         .requestMatchers("/api/v1/event-types/**", "/api/v1/user-sessions/**", "/api/v1/event-logs/**", "/api/v1/admin"
-                        ,"/api/v1/analysis-results", "/api/v1/heatmap/**", "/ws/analytics/**").permitAll()
+                        ,"/api/v1/analysis-results", "/api/v1/heatmap/**", "/ws/analytics/**","/api/v1/reviews").permitAll()
                         .requestMatchers("/api/v1/orders/**").hasRole("Customer")
-                        .requestMatchers("/api/v1/profile/**").hasRole("Customer")
                         .requestMatchers("/api/v1/admin/**").hasRole("Admin")
                         .requestMatchers(HttpMethod.POST, "/api/v1/products/**").hasRole("Admin")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/products/**").hasRole("Admin")
